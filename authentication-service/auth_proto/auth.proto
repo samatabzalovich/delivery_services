@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package auth;
+
+option go_package = "/auth";
+
+message Auth {
+  string email = 1;
+  string password = 2;
+}
+
+message TokenRequest {
+  Auth AuthEntry  = 1;
+}
+
+message TokenResponse {
+  string result = 1;
+  User user = 2;
+}
+service TokenService {
+  rpc CreateAuthenticationToken(TokenRequest) returns (TokenResponse);
+}
+
+message Reg {
+  string email = 1;
+  string password = 2;
+  string userName = 3;
+  string type = 4;
+  bool activated = 5;
+}
+
+message RegRequest {
+  Reg RegEntry  = 1;
+}
+
+message RegResponse {
+  string result = 1;
+}
+service RegService {
+  rpc Register(RegRequest) returns (RegResponse);
+}
+
+
+message Token {
+  string token = 1;
+}
+
+message User {
+  string email = 1;
+  string password = 2;
+  string userName = 3;
+  string type = 4;
+  bool activated = 5;
+  int64 id = 6;
+}
+
+message AuthRequest {
+  Token TokenEntry  = 1;
+}
+
+message AuthResponse {
+  User user = 1;
+  bool result = 2;
+}
+service AuthService {
+  rpc Authenticate(AuthRequest) returns (AuthResponse);
+}
