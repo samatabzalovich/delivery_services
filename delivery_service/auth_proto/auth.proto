@@ -1,0 +1,30 @@
+syntax = "proto3";
+// protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative auth/*.proto
+package auth;
+
+option go_package = "/auth";
+
+message Token {
+  string token = 1;
+}
+
+message User {
+  string email = 1;
+  string password = 2;
+  string userName = 3;
+  string type = 4;
+  bool activated = 5;
+  int64 id = 6;
+}
+
+message AuthRequest {
+  Token TokenEntry  = 1;
+}
+
+message AuthResponse {
+  User user = 1;
+  bool result = 2;
+}
+service AuthService {
+  rpc Authenticate(AuthRequest) returns (AuthResponse);
+}
